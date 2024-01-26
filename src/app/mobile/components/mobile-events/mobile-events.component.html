@@ -1,0 +1,10 @@
+<app-mobile-menu></app-mobile-menu>
+<div class="ion-page" id="main-content">
+  <app-mobile-toolbar-back></app-mobile-toolbar-back>
+  <!-- Principal page-->
+  <ion-content [fullscreen]="true">
+    <ion-datetime presentation="date" [displayFormat]="displayFormat" [value]="selectedDate"
+      [highlightedDates]="highlightedDates" (ionChange)="onDateChange($event)"></ion-datetime>
+
+  </ion-content>
+</div>

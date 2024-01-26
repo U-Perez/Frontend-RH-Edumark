@@ -1,0 +1,69 @@
+ <ion-content>
+  <app-darkmode></app-darkmode>
+  <app-company-navbar></app-company-navbar>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary">
+        <app-company-sidebar></app-company-sidebar>
+      </div>
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" style="height: 95.2vh;">
+        <!-- Add employee -->
+        <div
+          class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h1 class="h2">Dashboard</h1>
+          <div class="btn-toolbar mb-2 mb-md-0">
+
+            <button type="button"
+              class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1"
+              (click)="setOpen(true)">
+              <i class="bi-calendar3"></i>
+              Agregar evento de hoy
+            </button>
+          </div>
+        </div>
+        <div class='demo-app'>
+          <div class='demo-app-main'>
+            <full-calendar *ngIf='calendarVisible' class="calendar" [options]='calendarOptions'
+              (eventClick)="handleDateSelect($event) ">
+              <ng-template #eventContent let-arg>
+
+                <b class="event-title">{{ arg.event.title }}</b>
+                <b> {{ arg.event.description }} </b>
+                <br> 
+              </ng-template>
+            </full-calendar>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+  <ion-modal [isOpen]="isModalOpen">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Modal</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click) ="setOpen(false)">Close</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <form [formGroup]="eventForm" (ngSubmit)="addEvent()">
+          <div class="form-outline mb-2">
+             <ion-input   type="text" label="Titulo" label-placement="floating" fill="outline" formControlName="title"
+              placeholder="Ingresa el titulo"></ion-input>
+          </div>
+          <div class="form-outline mb-2">
+            <ion-input  type="text" label="Description " label-placement="floating" fill="outline"
+              formControlName="description" placeholder="Descripcion "></ion-input>
+          </div>
+          <div class="d-grid gap-2">
+            <button class="btn btn-primary" type="submit" [disabled]="eventForm.invalid">Add </button >   
+          </div>
+        </form>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+</ion-content>

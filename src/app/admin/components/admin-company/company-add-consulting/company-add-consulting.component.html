@@ -1,0 +1,296 @@
+<ion-content>
+  <app-darkmode></app-darkmode>
+  <app-company-navbar></app-company-navbar>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary">
+        <app-company-sidebar></app-company-sidebar>
+      </div>
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" style="height: 95.2vh;">
+        <!-- Add employee -->
+        <div
+          class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h1 class="h2">Dashboard</h1>
+          <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group me-2">
+              <button type="button" class="btn btn-sm btn-outline-secondary" expand="block"
+                (click)="setOpen(true, true)">Agregar una nueva asesoria</button>
+            </div>
+          </div>
+        </div>
+
+        <h2>Listado de asesorias disponibles</h2>
+        <div class="table-responsive small">
+          <table class="table table-sm table-hover">
+            <thead>
+              <tr class="table-dark">
+                <th scope="col">ID</th>
+                <th scope="col">Tipo de asesoria</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Horario</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let consulting of consultings">
+              <ng-container *ngIf="consulting.status === null && consulting.empresaId === empresaId">
+                <tr>
+                  <td>{{ consulting.id }}</td>
+                  <td>{{ consulting.title }}</td>
+                  <td>{{ consulting.description }}</td>
+                  <td>{{ consulting.time }}</td>
+                  <td>
+                    <button type="button" class="btn btn-warning btn-sm me-1" (click)="openUpdateModal(consulting)">
+                      <i class="bi-pencil"></i>
+                    </button>
+                    <button type="button" class="btn btn-danger btn-sm" (click)="deleteConsulting(consulting.id)">
+                      <i class="bi-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+        <!-- Asesorias solicitadas -->
+        <h2>Asesorias solicitadas</h2>
+        <div class="table-responsive small">
+          <table class="table table-sm table-hover">
+            <thead>
+              <tr class="table-dark">
+                <th scope="col">ID</th>
+                <th scope="col">Tipo de asesoria</th>
+                <th scope="col">Comentario</th>
+                <th scope="col">Estado</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let consulting of consultings">
+              <ng-container *ngIf="consulting.status === 1 && consulting.usuarioId === usuarioId">
+                <tr>
+                  <td>{{ consulting.id }}</td>
+                  <td>{{ consulting.title }}</td>
+                  <td>{{ consulting.comment }}</td>
+                  <td class="text-warning"><strong>Pendiente</strong></td>
+                  <td>
+                    <button type="button" class="btn btn-warning btn-sm me-1"
+                      (click)="openUpdateStatusModal(consulting)">
+                      <i class="bi-pencil"> Agendar</i>
+                    </button>
+                    <button type="button" class="btn btn-danger btn-sm" (click)="deleteConsulting(consulting.id)">
+                      <i class="bi-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+        <!-- Asesorias por confirmar asistencia -->
+        <h2>Asesorias por confirmar asistencia</h2>
+        <div class="table-responsive small">
+          <table class="table table-sm table-hover">
+            <thead>
+              <tr class="table-dark">
+                <th scope="col">ID</th>
+                <th scope="col">Tipo de asesoria</th>
+                <th scope="col">Datos de la reunión</th>
+                <th scope="col">Estado</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let consulting of consultings">
+              <ng-container *ngIf="consulting.status === 2 && consulting.usuarioId === usuarioId">
+                <tr>
+                  <td>{{ consulting.id }}</td>
+                  <td>{{ consulting.title }}</td>
+                  <td>{{ consulting.comment }}</td>
+                  <td class="text-warning"><strong>Pendiente de confirmar asistencia</strong></td>
+                  <td>
+                    <button type="button" class="btn btn-danger btn-sm" (click)="deleteConsulting(consulting.id)">
+                      <i class="bi-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+        <!-- Asesorias agendadas -->
+        <h2>Asesorias agendadas</h2>
+        <div class="table-responsive small">
+          <table class="table table-sm table-hover">
+            <thead>
+              <tr class="table-dark">
+                <th scope="col">ID</th>
+                <th scope="col">Tipo de asesoria</th>
+                <th scope="col">Datos de la reunión</th>
+                <th scope="col">Estado</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let consulting of consultings">
+              <ng-container *ngIf="consulting.status === 3 && consulting.usuarioId === usuarioId">
+                <tr>
+                  <td>{{ consulting.id }}</td>
+                  <td>{{ consulting.title }}</td>
+                  <td>{{ consulting.comment }}</td>
+                  <td class="text-success"><strong>Asistencia confirmada</strong></td>
+                  <td>
+                    <button type="button" class="btn btn-danger btn-sm" (click)="deleteConsulting(consulting.id)">
+                      <i class="bi-trash"> Finalizar</i>
+                    </button>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+  </div>
+
+
+
+  <!--Modal-->
+  <ion-modal [isOpen]="isAddModalOpen" id="addUserModal" (ionModalDidDismiss)="onAddModalDismiss()">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Nueva asesoría</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="setOpen(false, true)">Close</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <form [formGroup]="userForm" (ngSubmit)="addConsulting()">
+          <!-- Title -->
+          <div class="form-outline mb-2">
+            <ion-input type="text" label="Tipo de asesoría" label-placement="floating" fill="outline"
+              formControlName="title" placeholder="Ejemplo. Asesoría Financiera"></ion-input>
+            <div *ngIf="userForm.get('title').invalid && userForm.get('title').touched">
+              <p class="text-danger small"><small>El tipo de asesoría es requerido</small></p>
+            </div>
+          </div>
+          <!-- Description -->
+          <div class="form-outline mb-2">
+            <ion-input type="text" label="Descripción" label-placement="floating" fill="outline"
+              formControlName="description" placeholder="Ingresa una descripción"></ion-input>
+            <div *ngIf="userForm.get('description').invalid && userForm.get('description').touched">
+              <p class="text-danger small"><small>La descripción es requerida</small></p>
+            </div>
+          </div>
+          <!-- time input -->
+          <div class="form-outline mb-2">
+            <ion-input type="text" label="Horario" label-placement="floating" fill="outline" formControlName="time"
+              placeholder="Ejemplo. 9:30 AM - 2:00 PM"></ion-input>
+            <div *ngIf="userForm.get('time').invalid && userForm.get('time').touched">
+              <p class="text-danger small"><small>El horario es requerido</small></p>
+            </div>
+          </div>
+          <!-- Submit button -->
+          <div class="d-grid gap-2">
+            <button class="btn btn-primary" type="submit" [disabled]="userForm.invalid">Registrar</button>
+            <button class="btn btn-secondary btn-block" type="button" [routerLink]="['empleado','panel','inicio']">
+              Regresar <i class="bi bi-arrow-return-left"></i>
+            </button>
+          </div>
+        </form>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <!-- Modal de actualización de usuario -->
+  <ion-modal [isOpen]="isUpdateModalOpen">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Nuevo usuario</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="setOpen(false, true)">Close</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <form [formGroup]="userForm" (ngSubmit)="updateEmployee()">
+          <!-- Title -->
+          <div class="form-outline mb-2">
+            <ion-input type="text" label="Tipo de asesoría" label-placement="floating" fill="outline"
+              formControlName="title" placeholder="Ejemplo. Asesoría Financiera"></ion-input>
+            <div *ngIf="userForm.get('title').invalid && userForm.get('title').touched">
+              <p class="text-danger small"><small>El tipo de asesoría es requerido</small></p>
+            </div>
+          </div>
+          <!-- Description -->
+          <div class="form-outline mb-2">
+            <ion-input type="text" label="Descripción" label-placement="floating" fill="outline"
+              formControlName="description" placeholder="Ingresa una descripción"></ion-input>
+            <div *ngIf="userForm.get('description').invalid && userForm.get('description').touched">
+              <p class="text-danger small"><small>La descripción es requerida</small></p>
+            </div>
+          </div>
+          <!-- time input -->
+          <div class="form-outline mb-2">
+            <ion-input type="text" label="Horario" label-placement="floating" fill="outline" formControlName="time"
+              placeholder="Ejemplo. 9:30 AM - 2:00 PM"></ion-input>
+            <div *ngIf="userForm.get('time').invalid && userForm.get('time').touched">
+              <p class="text-danger small"><small>El horario es requerido</small></p>
+            </div>
+          </div>
+          <!-- Submit button -->
+          <div class="d-grid gap-2">
+            <button class="btn btn-primary" type="submit" [disabled]="userForm.invalid">Guardar cambios</button>
+            <button class="btn btn-secondary btn-block" type="button" (click)="setOpen(false, false)">Regresar <i
+                class="bi bi-arrow-return-left"></i></button>
+          </div>
+        </form>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <!-- Modal de actualización de status -->
+  <ion-modal [isOpen]="isUpdateStatusModalOpen">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Nuevo usuario</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="setOpen(false, true)">Close</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <form [formGroup]="statusForm" (ngSubmit)="updateStatus()">
+          <!-- time input -->
+          <div class="form-outline mb-2">
+            <ion-input type="text" label="Datos de la reunión" label-placement="floating" fill="outline"
+              formControlName="comment" placeholder="Ingresa los datos de la reunión"></ion-input>
+            <div *ngIf="userForm.get('comment').invalid && userForm.get('comment').touched">
+              <p class="text-danger small"><small>El horario es requerido</small></p>
+            </div>
+          </div>
+          <!-- Status select -->
+          <div class="form-outline mb-2">
+            <ion-label>Estado</ion-label>
+            <ion-select formControlName="status" placeholder="Selecciona un estado">
+              <ion-select-option value="1">Pendiente</ion-select-option>
+              <ion-select-option value="2">Pendiente de confirmar asistencia</ion-select-option>
+            </ion-select>
+            <div *ngIf="!selectedUser.status">
+              <p class="text-danger small"><small>El estado es requerido</small></p>
+            </div>
+          </div>
+          <!-- Submit button -->
+          <div class="d-grid gap-2">
+            <button class="btn btn-primary" type="submit" [disabled]="statusForm.invalid">Guardar cambios</button>
+            <button class="btn btn-secondary btn-block" type="button" (click)="setOpen(false, false)">Regresar <i
+                class="bi bi-arrow-return-left"></i></button>
+          </div>
+        </form>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+
+</ion-content>

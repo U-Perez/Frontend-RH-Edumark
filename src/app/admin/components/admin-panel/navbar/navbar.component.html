@@ -1,0 +1,30 @@
+<header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="dark">
+    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="#">Company name</a>
+
+    <ul class="navbar-nav flex-row d-md-none">
+        <li class="nav-item text-nowrap">
+            <button class="nav-link px-3 text-white" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSearch" aria-controls="navbarSearch" aria-expanded="false"
+                aria-label="Toggle search">
+                <i class="bi bi-caret-down-fill"></i>
+            </button>
+        </li>
+        <li class="nav-item text-nowrap">
+            <button class="nav-link px-3 text-white" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <i class="bi bi-list"></i>
+            </button>
+        </li>
+    </ul>
+
+    <div id="navbarSearch" class="navbar-search w-100 collapse text-white">
+        <div class="d-flex">
+            <div class="ms-auto">
+                <span class="me-2 text-gray-600 small">Admin</span>
+                <img src="{{ organization.foto }}" class="rounded-circle me-4 img-small" alt="...">
+            </div>
+
+        </div>
+    </div>
+</header>

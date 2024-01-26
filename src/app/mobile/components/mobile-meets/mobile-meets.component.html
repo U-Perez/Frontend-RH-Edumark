@@ -1,0 +1,66 @@
+<app-mobile-menu></app-mobile-menu>
+<div class="ion-page" id="main-content">
+  <app-mobile-toolbar-back></app-mobile-toolbar-back>
+  <!-- Principal page-->
+  <ion-content [fullscreen]="true">
+
+    <div class="ion-padding">
+      <!-- Asesorias confirmadas-->
+      <!-- Encabezados que se muestran solo si hay alguna asesoría con estado -->
+      <h1>Asesorias asignadas</h1>
+      <h3 class="text-danger"><strong>!No olvides asistir¡</strong></h3>
+      <!-- Bucle para mostrar las asesorías con estado no nulo -->
+      <div *ngFor="let consulting of consultings">
+        <ion-card *ngIf="consulting.status === 3 && consulting.empleadoId === empleadoId">
+          <ion-card-header>
+            <ion-card-title>{{ consulting.title }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            {{ consulting.comment }} <br><br>
+            <span class="text-success"><strong>Estado: Asistencia confirmada</strong> </span><br><br>
+          </ion-card-content>
+        </ion-card>
+      </div>
+
+      <!-- Confirmación de asistencia -->
+      <!-- Muestra el encabezado h2 solo si hay asesorías pendientes (con estado 2) -->
+      <h2 *ngIf="consultings?.length > 0 && hayAsesoriasPendientes()">Asesorias pendientes de confirmación</h2>
+
+      <div *ngFor="let consulting of consultings">
+        <ion-card *ngIf="consulting.status === 2 && consulting.empleadoId === empleadoId">
+          <ion-card-header>
+            <ion-card-title>{{ consulting.title }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            {{ consulting.comment }} <br><br>
+            <span class="text-warning text-opacity-75"><strong>Estado: Pendiente de confirmar asistencia</strong></span>
+            <br><br>
+            <!-- Llama a la función confirmarAsistencia() al hacer clic -->
+            <ion-button expand="block" color="success" (click)="confirmarAsistencia(consulting.id)">Confirmar
+              asistencia</ion-button>
+          </ion-card-content>
+        </ion-card>
+      </div>
+      <!-- Solicitar una asesoria-->
+      <h1>Solicita una asesoria</h1>
+      <ion-text color="warning"><ion-icon name="warning"></ion-icon></ion-text>
+      !Aviso¡ Haz clic para agendar una cita, en caso de asesoría virtual recuerda tener instaladas las aplicaciones
+      que usa tu empresa
+      <div *ngFor="let consulting of consultings">
+        <ion-card (click)="solicitarAsesoria(consulting.usuarioId, consulting.title)"
+          *ngIf="consulting.status === null && consulting.empresaId === empresaId">
+          <ion-card-header>
+            <ion-card-title>{{ consulting.title }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            {{ consulting.description }}<br><br>
+            En el horario de {{ consulting.time }} <br><br>
+          </ion-card-content>
+        </ion-card>
+      </div>
+
+
+
+    </div>
+  </ion-content>
+</div>

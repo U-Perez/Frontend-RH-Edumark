@@ -1,0 +1,121 @@
+<ion-content>
+  <app-darkmode></app-darkmode>
+  <app-navbar></app-navbar>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary">
+        <app-sidebar></app-sidebar>
+      </div>
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" style="height: 95.2vh;">
+        <!-- Add employee -->
+        <div
+          class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h1 class="h2">Dashboard</h1>
+          <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group me-2">
+              <button type="button" class="btn btn-sm btn-outline-secondary" expand="block">Agregar
+                empleado</button>
+              <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+            </div>
+            <button type="button"
+              class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1">
+              <i class="bi-calendar3"></i>
+              This week
+            </button>
+          </div>
+        </div>
+        <h2>Editar los datos de la empresa</h2>
+        <div class="col-sm-12 col-md-12 p-3 shadow-lg rounded">
+          <form [formGroup]="entidadForm" (ngSubmit)="editCompany()">
+
+            <!-- Name company -->
+            <div class="form-outline mb-2">
+              <ion-input type="text" label="Nombre de la empresa" label-placement="floating" fill="outline"
+                formControlName="nombre" placeholder="Ingresa el nombre de la empresa"></ion-input>
+              <div *ngIf="entidadForm.get('nombre').invalid && entidadForm.get('nombre').touched">
+                <p class="text-danger small"><small>El nombre de la entidad es requerido</small></p>
+              </div>
+            </div>
+            <!-- Location company -->
+            <div class="form-outline mb-2">
+              <ion-input type="text" label="Ubicación" label-placement="floating" fill="outline"
+                placeholder="Estado, Ciudad, País / Ejem. Querétaro, Qro, México / Quintana Roo, Cancún, México"
+                formControlName="ubicacion"></ion-input>
+              <div *ngIf="entidadForm.get('ubicacion').invalid && entidadForm.get('ubicacion').touched">
+                <p class="text-danger small"><small>La ubicación es requerida</small></p>
+              </div>
+            </div>
+            <!-- Giro -->
+            <ion-item lines="full" class="mb-2">
+              <ion-select aria-label="giros" interface="action-sheet"
+                placeholder="Selecciona el Giro de tu organización" formControlName="giroId">
+                <ion-select-option *ngFor="let giro of giros" [value]="giro.id">{{ giro.tipo }}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <div *ngIf="entidadForm.get('giroId').invalid && entidadForm.get('giroId').touched">
+              <p class="text-danger small"><small>El giro de la entidad es requerido</small></p>
+            </div>
+            <!-- RFC -->
+            <div class="form-outline mb-2">
+              <ion-input type="text" label="RFC de la entidad" label-placement="floating" fill="outline"
+                formControlName="rfc" [counter]="true" maxlength="13"
+                placeholder="Ingresa el RFC de la organización"></ion-input>
+              <div *ngIf="entidadForm.get('rfc').invalid && entidadForm.get('rfc').touched">
+                <p class="text-danger small"><small>El RFC es requerido y debe tener entre 12 y 13 caracteres</small>
+                </p>
+              </div>
+            </div>
+            <!-- Company representative -->
+            <div class="form-outline mb-2">
+              <ion-input type="text" label="Nombre completo del representante" label-placement="floating" fill="outline"
+                formControlName="representante"
+                placeholder="Nombres Apellido Paterno Apellido Materno / Ejemplo. Juan Manuel Lorenzo Peralta"></ion-input>
+              <div *ngIf="entidadForm.get('representante').invalid && entidadForm.get('representante').touched">
+                <p class="text-danger small"><small>El nombre del representante es requerido</small></p>
+              </div>
+            </div>
+            <!-- Phone number -->
+            <div class="form-outline mb-2">
+              <ion-input type="tel" label="Numero telefónico de contacto" label-placement="floating" fill="outline"
+                formControlName="telefono" placeholder="Ejemplo. 888-888-8888"></ion-input>
+              <div *ngIf="entidadForm.get('telefono').invalid && entidadForm.get('telefono').touched">
+                <p class="text-danger small"><small>El número de teléfono es requerido y debe tener minimo 10
+                    dígitos</small></p>
+              </div>
+            </div>
+            <!-- Email input -->
+            <div class="form-outline mb-2">
+              <ion-input type="email" label="Correo electronico de contacto" label-placement="floating" fill="outline"
+                formControlName="correo" placeholder="Ejemplo. email@domain.com"></ion-input>
+              <div *ngIf="entidadForm.get('correo').invalid && entidadForm.get('correo').touched">
+                <p class="text-danger small"><small>El correo electrónico es requerido y debe ser válido</small></p>
+              </div>
+            </div>
+            <!-- Password input -->
+            <div class="form-outline mb-2">
+              <ion-input type="password" label="Contraseña" label-placement="floating" fill="outline"
+                formControlName="password" placeholder="Ejemplo. r5LjN8Yvg$MNtFui"></ion-input>
+              <div *ngIf="entidadForm.get('password').invalid && entidadForm.get('password').touched">
+                <p class="text-danger small"><small>La contraseña es requerida y debe tener al menos 8
+                    caracteres</small></p>
+              </div>
+            </div>
+            <div class="btn-outline-secondary gap-2 mb-2">
+              <button type="button" (click)="onAddImageClick()" class="btn btn-sm btn-outline-secondary"><i
+                  class="bi bi-image"></i> Subir foto de perfil</button>
+              <input type="file" accept="image/*" #fileInput hidden (change)="onFileChange($event)">
+            </div>
+
+            <!-- Submit button -->
+            <div class="d-grid gap-2">
+              <button class="btn btn-primary" type="submit" [disabled]="entidadForm.invalid">Editar</button>
+            </div>
+          </form>
+        </div>
+
+
+      </main>
+    </div>
+  </div>
+</ion-content>

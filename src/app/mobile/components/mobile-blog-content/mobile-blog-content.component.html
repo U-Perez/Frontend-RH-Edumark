@@ -1,0 +1,11 @@
+<app-mobile-menu></app-mobile-menu>
+<div class="ion-page" id="main-content">
+  <app-mobile-toolbar-back></app-mobile-toolbar-back>
+  <!-- Principal page-->
+  <ion-content [fullscreen]="true">
+
+    <div *ngIf="blog" class="ion-padding">
+      <div [innerHTML]="safeContent"></div>
+    </div>
+  </ion-content>
+</div>

@@ -1,0 +1,7 @@
+{
+  "name": "sistema-rh-edumark",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

@@ -1,0 +1,98 @@
+<ion-content>
+  <div class="container">
+    <div class="row align-items-center justify-content-center gx-5" style="height: 100vh;">
+      <!-- Register form -->
+      <div class="col-sm-12 col-md-12 p-3 shadow-lg rounded">
+        <h1 class="mb-2">Registrate como empleado</h1>
+        <form [formGroup]="employeeForm" (ngSubmit)="addEmployee()">
+          <!-- Full name -->
+          <div class="form-outline mb-2">
+            <ion-input type="text" label="Nombre completo" label-placement="floating" fill="outline"
+              formControlName="nombre" placeholder="Ingresa tu nombre completo"></ion-input>
+            <div *ngIf="employeeForm.get('nombre').invalid && employeeForm.get('nombre').touched">
+              <p class="text-danger small"><small>Tu nombre completo es requerido</small></p>
+            </div>
+          </div>
+          <!-- Phone number -->
+          <div class="form-outline mb-2">
+            <ion-input type="tel" label="Numero de colaborador" label-placement="floating" fill="outline"
+              formControlName="noColaborador"
+              placeholder="Ingresa tu numero de colaborador / Ejemplo. STAFF-100"></ion-input>
+            <div *ngIf="employeeForm.get('noColaborador').invalid && employeeForm.get('noColaborador').touched">
+              <p class="text-danger small"><small>El número de colaborador es requerido</small></p>
+            </div>
+          </div>
+          <!-- Phone number -->
+          <div class="form-outline mb-2">
+            <ion-input type="tel" label="Numero telefónico de contacto" label-placement="floating" fill="outline"
+              formControlName="telefono" placeholder="Ejemplo. 888-888-8888"></ion-input>
+            <div *ngIf="employeeForm.get('telefono').invalid && employeeForm.get('telefono').touched">
+              <p class="text-danger small"><small>El número de teléfono es requerido y debe tener minimo 10
+                  dígitos</small></p>
+            </div>
+          </div>
+          <!-- Deparment box -->
+          <ion-item lines="full" class="mb-1">
+            <ion-select aria-label="departamento" placeholder="Departamento al que perteneces"
+              formControlName="departamento">
+              <ion-select-option value="TIC">TIC</ion-select-option>
+              <ion-select-option value="Recursos Humanos">Recursos humanos</ion-select-option>
+              <ion-select-option value="Ventas">Ventas</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <div *ngIf="employeeForm.get('departamento').invalid && employeeForm.get('departamento').touched">
+            <p class="text-danger small"><small>El departamento es necesario</small></p>
+          </div>
+          <!-- Job box -->
+          <ion-item lines="full" class="mb-1">
+            <ion-select aria-label="puesto" placeholder="Puesto de trabajo" formControlName="puesto">
+              <ion-select-option value="Gerente">Gerente</ion-select-option>
+              <ion-select-option value="Practicante">Practicante</ion-select-option>
+              <ion-select-option value="Colaborador">Colaborador</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <div *ngIf="employeeForm.get('puesto').invalid && employeeForm.get('puesto').touched">
+            <p class="text-danger small"><small>El departamento es necesario</small></p>
+          </div>
+          <!-- Work shift -->
+          <ion-item lines="full" class="mb-2">
+            <ion-select aria-label="turno" placeholder="Turno laboral" formControlName="turno">
+              <ion-select-option value="Matutino">Matutino</ion-select-option>
+              <ion-select-option value="Vespertino">Vespertino</ion-select-option>
+              <ion-select-option value="Mixto">Mixto</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <div *ngIf="employeeForm.get('turno').invalid && employeeForm.get('turno').touched">
+            <p class="text-danger small"><small>El turno es necesario</small></p>
+          </div>
+          <!-- Email input -->
+          <div class="form-outline mb-2">
+            <ion-input type="email" label="Correo electronico de contacto" label-placement="floating" fill="outline"
+              formControlName="correo" placeholder="Ejemplo. email@domain.com"></ion-input>
+            <div *ngIf="employeeForm.get('correo').invalid && employeeForm.get('correo').touched">
+              <p class="text-danger small"><small>El correo electrónico es requerido y debe ser válido</small></p>
+            </div>
+          </div>
+          <!-- Password input -->
+          <div class="form-outline mb-2">
+            <ion-input type="password" label="Contraseña" label-placement="floating" fill="outline"
+              formControlName="password" placeholder="Ejemplo. r5LjN8Yvg$MNtFui"></ion-input>
+            <div *ngIf="employeeForm.get('password').invalid && employeeForm.get('password').touched">
+              <p class="text-danger small"><small>La contraseña es requerida y debe tener al menos 8
+                  caracteres</small></p>
+            </div>
+          </div>
+          <!-- Submit button -->
+          <div class="d-grid gap-2">
+            <button class="btn btn-primary" type="submit" [disabled]="employeeForm.invalid">Registrar</button>
+            <button class="btn btn-secondary btn-block" type="button"
+              [routerLink]="['empleado','panel','inicio']">Regresar <i class="bi bi-arrow-return-left"></i></button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+</ion-content>

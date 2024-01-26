@@ -1,0 +1,165 @@
+<ion-content>
+  <app-darkmode></app-darkmode>
+  <app-company-navbar></app-company-navbar>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary">
+        <app-company-sidebar></app-company-sidebar>
+      </div>
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" style="height: 95.2vh;">
+        <!-- Add employee -->
+        <div
+          class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h1 class="h2">Dashboard</h1>
+          <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group me-2">
+              <button type="button" class="btn btn-sm btn-outline-secondary" expand="block"
+                (click)="setOpen(true)">Agregar
+                empleado</button>
+              <button type="button" class="btn btn-sm btn-outline-secondary" (click)="copyUrl()">Link de
+                invitación</button>
+            </div>
+          </div>
+        </div>
+
+        <h2>Listado de empleados</h2>
+        <div class="table-responsive small">
+          <table class="table table-sm table-hover">
+            <thead>
+              <tr class="table-dark">
+                <th scope="col">#</th>
+                <th scope="col">Empleado</th>
+                <th scope="col">Puesto</th>
+                <th scope="col">Correo</th>
+                <th scope="col">Telefono</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let employee of employees">
+              <tr>
+                <td>{{ employee.noColaborador }}</td>
+                <td>{{ employee.nombre }}</td>
+                <td>{{ employee.puesto }}</td>
+                <td>{{ employee.correo }}</td>
+                <td>{{ employee.telefono }}</td>
+                <td>
+                  <button type="button" class="btn btn-warning btn-sm me-1">
+                    <i class="bi-pencil"></i>
+                  </button>
+                  <button type="button" class="btn btn-danger btn-sm" (click)="deleteEmployee(employee)">
+                    <i class="bi-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+  </div>
+
+
+  <!--Modal-->
+  <ion-modal [isOpen]="isModalOpen">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Nuevo empleado</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="setOpen(false)">Close</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <form [formGroup]="employeeForm" (ngSubmit)="addEmployee()">
+          <!-- Full name -->
+          <div class="form-outline mb-2">
+            <ion-input type="text" label="Nombre completo" label-placement="floating" fill="outline"
+              formControlName="nombre" placeholder="Ingresa tu nombre completo"></ion-input>
+            <div *ngIf="employeeForm.get('nombre').invalid && employeeForm.get('nombre').touched">
+              <p class="text-danger small"><small>Tu nombre completo es requerido</small></p>
+            </div>
+          </div>
+          <!-- Phone number -->
+          <div class="form-outline mb-2">
+            <ion-input type="tel" label="Numero de colaborador" label-placement="floating" fill="outline"
+              formControlName="noColaborador"
+              placeholder="Ingresa tu numero de colaborador / Ejemplo. STAFF-100"></ion-input>
+            <div *ngIf="employeeForm.get('noColaborador').invalid && employeeForm.get('noColaborador').touched">
+              <p class="text-danger small"><small>El número de colaborador es requerido</small></p>
+            </div>
+          </div>
+          <!-- Phone number -->
+          <div class="form-outline mb-2">
+            <ion-input type="tel" label="Numero telefónico de contacto" label-placement="floating" fill="outline"
+              formControlName="telefono" placeholder="Ejemplo. 888-888-8888"></ion-input>
+            <div *ngIf="employeeForm.get('telefono').invalid && employeeForm.get('telefono').touched">
+              <p class="text-danger small"><small>El número de teléfono es requerido y debe tener minimo 10
+                  dígitos</small></p>
+            </div>
+          </div>
+          <!-- Deparment box -->
+          <ion-item lines="full" class="mb-1">
+            <ion-select aria-label="departamento" placeholder="Departamento al que perteneces"
+              formControlName="departamento">
+              <ion-select-option value="TIC">TIC</ion-select-option>
+              <ion-select-option value="Recursos Humanos">Recursos humanos</ion-select-option>
+              <ion-select-option value="Ventas">Ventas</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <div *ngIf="employeeForm.get('departamento').invalid && employeeForm.get('departamento').touched">
+            <p class="text-danger small"><small>El departamento es necesario</small></p>
+          </div>
+          <!-- Job box -->
+          <ion-item lines="full" class="mb-1">
+            <ion-select aria-label="puesto" placeholder="Puesto de trabajo" formControlName="puesto">
+              <ion-select-option value="Gerente">Gerente</ion-select-option>
+              <ion-select-option value="Practicante">Practicante</ion-select-option>
+              <ion-select-option value="Colaborador">Colaborador</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <div *ngIf="employeeForm.get('puesto').invalid && employeeForm.get('puesto').touched">
+            <p class="text-danger small"><small>El departamento es necesario</small></p>
+          </div>
+          <!-- Work shift -->
+          <ion-item lines="full" class="mb-2">
+            <ion-select aria-label="turno" placeholder="Turno laboral" formControlName="turno">
+              <ion-select-option value="Matutino">Matutino</ion-select-option>
+              <ion-select-option value="Vespertino">Vespertino</ion-select-option>
+              <ion-select-option value="Mixto">Mixto</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <div *ngIf="employeeForm.get('turno').invalid && employeeForm.get('turno').touched">
+            <p class="text-danger small"><small>El turno es necesario</small></p>
+          </div>
+          <!-- Email input -->
+          <div class="form-outline mb-2">
+            <ion-input type="email" label="Correo electronico de contacto" label-placement="floating" fill="outline"
+              formControlName="correo" placeholder="Ejemplo. email@domain.com"></ion-input>
+            <div *ngIf="employeeForm.get('correo').invalid && employeeForm.get('correo').touched">
+              <p class="text-danger small"><small>El correo electrónico es requerido y debe ser válido</small></p>
+            </div>
+          </div>
+          <!-- Password input -->
+          <div class="form-outline mb-2">
+            <ion-input type="password" label="Contraseña" label-placement="floating" fill="outline"
+              formControlName="password" placeholder="Ejemplo. r5LjN8Yvg$MNtFui"></ion-input>
+            <div *ngIf="employeeForm.get('password').invalid && employeeForm.get('password').touched">
+              <p class="text-danger small"><small>La contraseña es requerida y debe tener al menos 8
+                  caracteres</small></p>
+            </div>
+          </div>
+          <!-- Submit button -->
+          <div class="d-grid gap-2">
+            <button class="btn btn-primary" type="submit" [disabled]="employeeForm.invalid">Registrar</button>
+            <button class="btn btn-secondary btn-block" type="button"
+              [routerLink]="['empleado','panel','inicio']">Regresar <i class="bi bi-arrow-return-left"></i></button>
+          </div>
+
+        </form>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+</ion-content>

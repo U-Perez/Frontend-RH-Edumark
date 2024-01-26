@@ -1,0 +1,17 @@
+{
+    "material-icon-theme.folders.associations": {},
+    "material-icon-theme.hidesExplorerArrows": true,
+    "material-icon-theme.folders.theme": "specific",
+    "merge-conflict.autoNavigateNextConflict.enabled": false,
+    "merge-conflict.diffViewPosition": "Beside",
+    "workbench.activityBar.iconClickBehavior": "toggle",
+    "workbench.activityBar.visible": true,
+    "workbench.tree.indent": 8,
+    "workbench.tree.renderIndentGuides": "onHover",
+    "workbench.view.alwaysShowHeaderActions": true,
+    "breadcrumbs.enabled": false,
+    "breadcrumbs.filePath": "on",
+    "breadcrumbs.icons": true,
+    "breadcrumbs.showArrays": true,
+    "breadcrumbs.symbolSortOrder": "position"
+}

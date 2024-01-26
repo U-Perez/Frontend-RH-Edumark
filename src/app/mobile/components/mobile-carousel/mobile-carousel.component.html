@@ -1,0 +1,11 @@
+<div>
+  <swiper-container (slidechange)="swiperSlideChanged($event)" slides-per-view="1" pagination-dynamic-bullets="true"
+    autoplay-delay="7000" autoplay-disable-on-interaction="false" loop="true" [pagination]="true" [zoom]="true">
+    <swiper-slide *ngFor="let image of images">
+      <div class="swiper-zoom-container">
+        <img [src]="image" />
+      </div>
+
+    </swiper-slide>
+  </swiper-container>
+</div>

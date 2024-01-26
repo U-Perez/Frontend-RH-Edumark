@@ -1,0 +1,101 @@
+<ion-content [fullscreen]="true">
+  <div class="container-fluid">
+    <div class="container">
+      <div class="row align-items-center justify-content-center" style="min-height: 100vh;">
+        <!-- Register company -->
+        <div class="col-sm-12 col-md-12 p-3 shadow-lg rounded">
+          <h1 class="mb-2">Registra una nueva entidad</h1>
+          <form [formGroup]="organizationForm" (ngSubmit)="addOrganization()">
+            <!-- Organization box -->
+            <ion-item lines="full" class="mb-2">
+              <ion-select aria-label="entidades" interface="action-sheet" placeholder="Tipo de entidad"
+                formControlName="tipoentidadId">
+                <ion-select-option *ngFor="let type of types" [value]="type.id">{{ type.tipo }}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <div *ngIf="organizationForm.get('tipoentidadId').invalid && organizationForm.get('tipoentidadId').touched">
+              <p class="text-danger small"><small>El tipo de entidad es requerido</small></p>
+            </div>
+            <!-- Name entity -->
+            <div class="form-outline mb-2">
+              <ion-input type="text" label="Nombre de la entidad" label-placement="floating" fill="outline"
+                formControlName="nombre" placeholder="Ingresa el nombre de tu organización"></ion-input>
+              <div *ngIf="organizationForm.get('nombre').invalid && organizationForm.get('nombre').touched">
+                <p class="text-danger small"><small>El nombre de la entidad es requerido</small></p>
+              </div>
+            </div>
+            <!-- Location company -->
+            <div class="form-outline mb-2">
+              <ion-input type="text" label="Ubicación" label-placement="floating" fill="outline"
+                formControlName="ubicacion"
+                placeholder="Estado, Ciudad, País / Ejemplo. Querétaro, Qro, México / Quintana Roo, Cancún, México"></ion-input>
+              <div *ngIf="organizationForm.get('ubicacion').invalid && organizationForm.get('ubicacion').touched">
+                <p class="text-danger small"><small>La ubicación es requerida</small></p>
+              </div>
+            </div>
+            <!-- Giro -->
+            <ion-item lines="full" class="mb-2">
+              <ion-select aria-label="giros" interface="action-sheet"
+                placeholder="Selecciona el Giro de tu organización" formControlName="giroId">
+                <ion-select-option *ngFor="let giro of giros" [value]="giro.id">{{ giro.tipo }}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <div *ngIf="organizationForm.get('giroId').invalid && organizationForm.get('giroId').touched">
+              <p class="text-danger small"><small>El giro de la entidad es requerido</small></p>
+            </div>
+            <!-- RFC -->
+            <div class="form-outline mb-2">
+              <ion-input type="text" label="RFC de la entidad" label-placement="floating" fill="outline"
+                formControlName="rfc" [counter]="true" maxlength="13"
+                placeholder="Ingresa el RFC de la organización"></ion-input>
+              <div *ngIf="organizationForm.get('rfc').invalid && organizationForm.get('rfc').touched">
+                <p class="text-danger small"><small>El RFC es requerido y debe tener entre 12 y 13 caracteres</small>
+                </p>
+              </div>
+            </div>
+            <!-- Company representative -->
+            <div class="form-outline mb-2">
+              <ion-input type="text" label="Nombre completo del representante" label-placement="floating" fill="outline"
+                formControlName="representante"
+                placeholder="Nombres Apellido Paterno Apellido Materno / Ejemplo. Juan Manuel Lorenzo Peralta"></ion-input>
+              <div
+                *ngIf="organizationForm.get('representante').invalid && organizationForm.get('representante').touched">
+                <p class="text-danger small"><small>El nombre del representante es requerido</small></p>
+              </div>
+            </div>
+            <!-- Phone number -->
+            <div class="form-outline mb-2">
+              <ion-input type="tel" label="Numero telefónico de contacto" label-placement="floating" fill="outline"
+                formControlName="telefono" placeholder="Ejemplo. 888-888-8888"></ion-input>
+              <div *ngIf="organizationForm.get('telefono').invalid && organizationForm.get('telefono').touched">
+                <p class="text-danger small"><small>El número de teléfono es requerido y debe tener minimo 10
+                    dígitos</small></p>
+              </div>
+            </div>
+            <!-- Email input -->
+            <div class="form-outline mb-2">
+              <ion-input type="email" label="Correo electronico de contacto" label-placement="floating" fill="outline"
+                formControlName="correo" placeholder="Ejemplo. email@domain.com"></ion-input>
+              <div *ngIf="organizationForm.get('correo').invalid && organizationForm.get('correo').touched">
+                <p class="text-danger small"><small>El correo electrónico es requerido y debe ser válido</small></p>
+              </div>
+            </div>
+            <!-- Password input -->
+            <div class="form-outline mb-2">
+              <ion-input type="password" label="Contraseña" label-placement="floating" fill="outline"
+                formControlName="password" placeholder="Ejemplo. r5LjN8Yvg$MNtFui"></ion-input>
+              <div *ngIf="organizationForm.get('password').invalid && organizationForm.get('password').touched">
+                <p class="text-danger small"><small>La contraseña es requerida y debe tener al menos 8
+                    caracteres</small></p>
+              </div>
+            </div>
+            <!-- Submit button -->
+            <div class="d-grid gap-2">
+              <button class="btn btn-primary" type="submit" [disabled]="organizationForm.invalid">Registrar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

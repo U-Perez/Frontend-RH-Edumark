@@ -1,0 +1,8 @@
+<ion-card *ngFor="let blog of blogs" [routerLink]="['','empleado','blog',blog.id]">
+  <ion-card-header>
+    <ion-card-title>{{ blog.title }}</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    {{ blog.description }}
+  </ion-card-content>
+</ion-card>

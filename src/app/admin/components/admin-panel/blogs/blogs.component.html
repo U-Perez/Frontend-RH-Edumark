@@ -1,0 +1,55 @@
+<ion-content>
+  <app-darkmode></app-darkmode>
+  <app-navbar></app-navbar>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary">
+        <app-sidebar></app-sidebar>
+      </div>
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" style="height: 95.2vh;">
+        <!-- Add employee -->
+        <div
+          class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h1 class="h2">Dashboard</h1>
+          <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group me-2">
+              <button type="button" class="btn btn-sm btn-outline-secondary" expand="block"
+                [routerLink]="['','admin-panel','agregar-blog']">Agregar blog</button>
+            </div>
+          </div>
+        </div>
+
+        <h2>Administra los blogs</h2>
+        <!-- content-->
+
+
+        <div class="table-responsive small">
+          <table class="table table-sm table-hover">
+            <thead>
+              <tr class="table-dark">
+                <th scope="col">Titulo</th>
+                <th scope="col">Descripción</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let blog of blogs">
+                <td>{{blog.title}}</td>
+                <td>{{blog.description}}</td>
+                <td>
+                  <div class="btn-group me-2">
+                    <button type="button" class="btn btn-danger btn-sm" (click)="deleteBlog(blog.id)">
+                      <i class="bi-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+  </div>
+
+</ion-content>
